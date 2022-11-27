@@ -4,6 +4,7 @@ import * as path from "path";
 import { AppDataSource } from "./data-source";
 import plantRouter from "./routes/PlantRoute";
 import cors from "cors";
+import userRouter from "./routes/UserRoute";
 
 dotenv.config({ path: ".env.local" });
 
@@ -17,7 +18,7 @@ AppDataSource.initialize()
     const corsOptions = {
       origin: "http://localhost:3000",
       methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-      allowedHeaders: "X-Requested-With,content-type",
+      // allowedHeaders: ["X-Requested-With", "Content-Type", "Headers"],
     };
     app.use(cors(corsOptions));
 
@@ -31,6 +32,7 @@ AppDataSource.initialize()
     );
 
     // ***** Data Routes *****
+    app.use("/api/v1/user", userRouter);
     app.use("/api/v1/plants", plantRouter);
 
     // **** Port config
